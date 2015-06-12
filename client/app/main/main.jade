@@ -2,24 +2,85 @@ div(ng-include='"components/navbar/navbar.html"')
 
 header#banner.hero-unit
   .container
-    h1 'Allo, 'Allo!
-    p.lead Kick-start your next web app with Angular Fullstack
-    img(src='assets/images/yeoman.png', alt='I\'m Yeoman')
-
+    img.img-responsive(src="assets/images/bannerSWHuancayo.png")
 .container
   .row
     .col-lg-12
-      h1.page-header Features:
-      ul.nav.nav-tabs.nav-stacked.col-md-4.col-lg-4.col-sm-6(ng-repeat='thing in awesomeThings')
-        li
-          a(href='#', tooltip='{{thing.info}}')
-            | {{thing.name}}
-
+      h1.page-header Registro:
+      form(name='form', novalidate).form
+        .form-group
+          p Nombre completo
+          input#fullname.form-control(type='text', placeholder='Nombres, Apellidos', name='fullname', ng-model='person.fullname', required, maxlength="150", pattern="^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ]+$")
+          div(ng-show="form.$submitted || form.fullname.$touched")
+            div(ng-show="form.fullname.$error.required") El campo es obligatorio.
+            div(ng-show="form.fullname.$error.pattern") No se permite caracteres extraños.
+        .form-group
+          p Perfil
+          select#profile.form-control(name='profile', ng-model='person.profile', required)
+            option(value='') Seleccionar
+            option(value="{{profile.name}}", ng-repeat="profile in profiles") {{profile.name}}
+          div(ng-show="form.$submitted || form.profile.$touched")
+            div(ng-show="form.profile.$error.required") El campo es obligatorio.
+        .form-group
+          p Forma de comprobante de pago
+          select#proofOfPayment.form-control(name='proofOfPayment', ng-model='person.proofOfPayment', required, ng-change="isRequired = person.proofOfPayment == 'Factura'")
+            option(value='') Seleccionar
+            option(value="{{pof.name}}", ng-repeat="pof in pofs") {{pof.name}}
+          div(ng-show="form.$submitted || form.proofOfPayment.$touched")
+            div(ng-show="form.proofOfPayment.$error.required") El campo es obligatorio.
+        .form-group(ng-show="isRequired")
+          p Razón Social
+          input#companyName.form-control(type='text', placeholder='Razón Social', name='companyName', ng-model='person.companyName', maxlength="150", ng-required="isRequired", pattern="^[a-zA-Z\ áéíóúÁÉÍÓÚñÑ]+$")
+          div(ng-show="form.$submitted || form.companyName.$touched")
+            div(ng-show="form.companyName.$error.required") El campo es obligatorio.
+            div(ng-show="form.companyName.$error.pattern") No se permite caracteres extraños.
+        .form-group(ng-show="isRequired")
+          p Dirección de la Empresa
+          input#companyAddress.form-control(type='text', placeholder='Dirección de la Empresa', name='companyAddress', ng-model='person.companyAddress', maxlength="300", ng-required="isRequired")
+          div(ng-show="form.$submitted || form.companyAddress.$touched")
+            div(ng-show="form.companyAddress.$error.required") El campo es obligatorio.
+        .form-group(ng-show="isRequired")
+          p RUC
+          input#ruc.form-control(type='text', placeholder='RUC', name='ruc', ng-model='person.ruc', maxlength="20", ng-required="isRequired", pattern="^[0-9]+$")
+          div(ng-show="form.$submitted || form.ruc.$touched")
+            div(ng-show="form.ruc.$error.required") El campo es obligatorio.
+            div(ng-show="form.ruc.$error.pattern") Solo se permite valores númericos.
+        .form-group
+          p DNI
+          input#dni.form-control(type='text', placeholder='DNI', name='dni', ng-model='person.dni', required, maxlength="8", pattern="^[0-9]+$")
+          div(ng-show="form.$submitted || form.dni.$touched")
+            div(ng-show="form.dni.$error.required") El campo es obligatorio.
+            div(ng-show="form.dni.$error.pattern") Solo se permite valores númericos.
+        .form-group
+          p Correo Electrónico
+          input#email.form-control(type='email', placeholder='Correo Electrónico', name='email',  maxlength="70", ng-model='person.email')
+          div(ng-show="form.$submitted || form.email.$touched")
+            div(ng-show="form.email.$error.required") El campo es obligatorio.
+            div(ng-show="form.email.$error.email") El correo electrónico es invalido.
+        .form-group
+          p Número de Celular
+          input#cellPhone.form-control(type='text', placeholder='Número de Celular', name='cellPhone', ng-model='person.cellPhone', required, maxlength="15", pattern="^[0-9]+$")
+          div(ng-show="form.$submitted || form.cellPhone.$touched")
+            div(ng-show="form.cellPhone.$error.required") El campo es obligatorio.
+            div(ng-show="form.cellPhone.$error.pattern") Solo se permite valores númericos.
+        .form-group
+          p Dirección
+          input#address.form-control(type='text', placeholder='Dirección', name='address', ng-model='person.address', required, maxlength="300")
+          div(ng-show="form.$submitted || form.address.$touched")
+            div(ng-show="form.address.$error.required") El campo es obligatorio.
+            div(ng-show="form.cellPhone.$error.pattern") Solo se permite valores númericos.
+        .form-group
+          p Instituto(Opcional)
+          input#institute.form-control(type='text', placeholder='Instituto', name='institute', ng-model='person.institute', required, maxlength="300")
+          div(ng-show="form.$submitted || form.institute.$touched")
+            div(ng-show="form.institute.$error.required") El campo es obligatorio.
+        .form-group.text-center
+          button.btn.btn-primary(type='submit', ng-click="submit(form);") Enviar
 footer.footer
   .container
     p
-      | Angular Fullstack v2.0.13
+      | Startup Weekend Huancayo
       = ' | '
-      a(href='https://twitter.com/tyhenkel') @tyhenkel
+      a(href='https://twitter.com/swhuancayo', target='_blank') twitter
       = ' | '
-      a(href='https://github.com/DaftMonk/generator-angular-fullstack/issues?state=open') Issues
+      a(href='https://www.facebook.com/startupweekendhuancayo', target='_blank') facebook
