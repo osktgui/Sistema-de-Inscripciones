@@ -28,7 +28,7 @@ exports.create = function(req, res) {
   Person.create(req.body, function(err, Person) {
     if(err) { return handleError(res, err); }
     //console.log(req.body.email);
-    send_email_mandrill(req.body.fullname, req.body.email);
+    send_email_mandrill(req.body.fullname, req.body.email, req.body.dni);
 
     return res.json(201, Person);
   });
@@ -64,12 +64,15 @@ function handleError(res, err) {
   return res.send(500, err);
 }
 
-function send_email_mandrill(fullname, email){
+function send_email_mandrill(fullname, email, dni){
   var template_name = "confirmacion";
   var template_content = [{
           "name": "NOMBRE_COMPLETO",
           "content": "Lorem ipsum loremi ipsum"
-      }];
+      },{
+              "name": "DNI",
+              "content": dni
+          }];
   var message = {
       "subject": "Confirmación e Inscripción",
       "from_email": "startupweekendhuancayo@gmail.com",
@@ -86,7 +89,10 @@ function send_email_mandrill(fullname, email){
       "global_merge_vars": [{
               "name": "NOMBRE_COMPLETO",
               "content": fullname
-          }]
+          },{
+                  "name": "DNI",
+                  "content": dni
+              }]
 
         /*  ,
       "attachments": [{
