@@ -86,12 +86,15 @@ function send_email_mandrill(fullname, email){
       "global_merge_vars": [{
               "name": "NOMBRE_COMPLETO",
               "content": fullname
-          }],
+          }]
+
+        /*  ,
       "attachments": [{
               "type": "text/plain",
               "name": "myfile.txt",
               "content": "ZXhhbXBsZSBmaWxl"
-          }]
+          }
+        ]*/
   };
   var async = false;
   var ip_pool = null;
