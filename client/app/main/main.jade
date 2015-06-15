@@ -70,7 +70,7 @@ header#banner.hero-unit
             div(ng-show="form.address.$error.required") El campo es obligatorio.
             div(ng-show="form.cellPhone.$error.pattern") Solo se permite valores númericos.
         .form-group
-          p Instituto(Opcional)
+          p Institución(Opcional)
           input#institute.form-control(type='text', placeholder='Instituto', name='institute', ng-model='person.institute', required, maxlength="300")
           div(ng-show="form.$submitted || form.institute.$touched")
             div(ng-show="form.institute.$error.required") El campo es obligatorio.

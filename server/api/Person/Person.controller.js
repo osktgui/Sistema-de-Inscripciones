@@ -4,83 +4,11 @@ var _ = require('lodash');
 var Person = require('./Person.model');
 var mandrill = require('mandrill-api/mandrill');
 var mandrill_client = new mandrill.Mandrill('oAdSG7v4NJ-oJbTTWjZm1A');
+//var mandrill_client = new mandrill.Mandrill('M0z-mfYNNN4Kp9GwRGBNlA');
 // Get list of Persons
 exports.index = function(req, res) {
   Person.find(function (err, Persons) {
     if(err) { return handleError(res, err); }
-    /*var template_name = "confirmacion";
-    var template_content = [{
-            "name": "example name",
-            "content": "example content"
-        }];
-    var message = {
-        "html": "",
-        "text": "",
-        "subject": "Confirmación e Inscripción",
-        "from_email": "luis@xurface.com",
-        "from_name": "Luis Carlos Oscátegui",
-        "to": [{
-                "email": "luis@xurface.com",
-                "name": "Oscátegui",
-                "type": "to"
-            }],
-        "headers": {
-            "Reply-To": "message.reply@example.com"
-        },
-        "important": false,
-        "track_opens": null,
-        "track_clicks": null,
-        "auto_text": null,
-        "auto_html": null,
-        "inline_css": null,
-        "url_strip_qs": null,
-        "preserve_recipients": null,
-        "view_content_link": null,
-        "tracking_domain": null,
-        "signing_domain": null,
-        "return_path_domain": null,
-        "merge": true,
-        "merge_language": "mailchimp",
-        "global_merge_vars": [{
-                "name": "merge1",
-                "content": "merge1 content"
-            }],
-        "merge_vars": [{
-                "rcpt": "recipient.email@example.com",
-                "vars": [{
-                        "name": "NOMBRE_COMPLETO",
-                        "content": "Lorem ipsum loremi ipsum"
-                    }]
-            }],
-        "tags": [
-            "confirmacion-inscripcion"
-        ],
-        "subaccount": "luis",
-        "metadata": {
-            "website": "www.xurface.com"
-        },
-        "attachments": [{
-                "type": "text/plain",
-                "name": "myfile.txt",
-                "content": "ZXhhbXBsZSBmaWxl"
-            }],
-        "images": [{
-                "type": "image/png",
-                "name": "IMAGECID",
-                "content": "ZXhhbXBsZSBmaWxl"
-            }]
-    };
-    var async = false;
-    var send_at = Date.now;
-    mandrill_client.messages.sendTemplate({"template_name": template_name, "template_content": template_content, "message": message, "async": async, "send_at": send_at}, function(result) {
-        console.log(result);
-    }, function(e) {
-        // Mandrill returns the error as an object with name and message keys
-        console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-        // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
-    });
-    */
-
 
     return res.json(200, Persons);
   });
@@ -99,8 +27,8 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   Person.create(req.body, function(err, Person) {
     if(err) { return handleError(res, err); }
-    console.log(req.body.email);
-
+    //console.log(req.body.email);
+    send_email_mandrill(req.body.fullname, req.body.email);
 
     return res.json(201, Person);
   });
@@ -134,4 +62,45 @@ exports.destroy = function(req, res) {
 
 function handleError(res, err) {
   return res.send(500, err);
+}
+
+function send_email_mandrill(fullname, email){
+  var template_name = "confirmacion";
+  var template_content = [{
+          "name": "NOMBRE_COMPLETO",
+          "content": "Lorem ipsum loremi ipsum"
+      }];
+  var message = {
+      "subject": "Confirmación e Inscripción",
+      "from_email": "startupweekendhuancayo@gmail.com",
+      "from_name": "Equipo Organizador",
+      "to": [{
+              "email": email,
+              "name": fullname,
+              "type": "to"
+          },{
+                  "email": "startupweekendhuancayo@gmail.com",
+                  "name": "Startup Weekend Huancayo",
+                  "type": "cc"
+              }],
+      "global_merge_vars": [{
+              "name": "NOMBRE_COMPLETO",
+              "content": fullname
+          }],
+      "attachments": [{
+              "type": "text/plain",
+              "name": "myfile.txt",
+              "content": "ZXhhbXBsZSBmaWxl"
+          }]
+  };
+  var async = false;
+  var ip_pool = null;
+  var send_at = null;
+  mandrill_client.messages.sendTemplate({"template_name": template_name, "template_content": template_content, "message": message, "async": async, "ip_pool": ip_pool,"send_at": send_at}, function(result) {
+      console.log(result);
+  }, function(e) {
+      // Mandrill returns the error as an object with name and message keys
+      console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+      // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+  });
 }
