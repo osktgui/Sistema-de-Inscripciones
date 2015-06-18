@@ -15,6 +15,14 @@ header#banner.hero-unit
             div(ng-show="form.fullname.$error.required") El campo es obligatorio.
             div(ng-show="form.fullname.$error.pattern") No se permite caracteres extraños.
         .form-group
+          p Sexo
+          select#sexo.form-control(name='sexo', ng-model='person.sexo', required)
+            option(value='') Seleccionar
+            option(value="masculino") Masculino
+            option(value="femenino") Femenino
+          div(ng-show="form.$submitted || form.sexo.$touched")
+            div(ng-show="form.sexo.$error.required") El campo es obligatorio.
+        .form-group
           p Perfil
           select#profile.form-control(name='profile', ng-model='person.profile', required)
             option(value='') Seleccionar

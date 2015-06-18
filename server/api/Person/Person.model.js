@@ -11,6 +11,7 @@ var PersonSchema = new Schema({
   companyAddress: String,
   ruc: String,
   dni: String,
+  sexo: String,
   email: String,
   cellPhone: String,
   address: String,
