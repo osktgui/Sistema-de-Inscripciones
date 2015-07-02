@@ -38,6 +38,7 @@ angular.module('inscripcionesApp')
       if(form.$valid){
         $http.post('/api/People', $scope.person).success(function(response) {
           $scope.person = {};
+          $scope.mostrarformulario = true;
         });
       }
     };

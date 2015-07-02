@@ -1,11 +1,8 @@
-div(ng-include='"components/navbar/navbar.html"')
-
+div.header-text
 header#banner.hero-unit
-  .container
-    img.img-responsive(src="assets/images/bannerSWHuancayo.png")
 .container
   .row
-    .col-lg-12
+    .col-lg-12(ng-hide="mostrarformulario")
       h1.page-header Registro:
       form(name='form', novalidate).form
         .form-group
@@ -76,7 +73,7 @@ header#banner.hero-unit
           input#address.form-control(type='text', placeholder='Dirección', name='address', ng-model='person.address', required, maxlength="300")
           div(ng-show="form.$submitted || form.address.$touched")
             div(ng-show="form.address.$error.required") El campo es obligatorio.
-            div(ng-show="form.cellPhone.$error.pattern") Solo se permite valores númericos.
+            div(ng-show="form.address.$error.pattern") Solo se permite valores númericos.
         .form-group
           p Institución(Opcional)
           input#institute.form-control(type='text', placeholder='Instituto', name='institute', ng-model='person.institute', required, maxlength="300")
@@ -84,6 +81,8 @@ header#banner.hero-unit
             div(ng-show="form.institute.$error.required") El campo es obligatorio.
         .form-group.text-center
           button.btn.btn-primary(type='submit', ng-click="submit(form);") Enviar
+    .col-lg-12(ng-show="mostrarformulario")
+      p.bg-primary(style="padding: 15px;margin-top: 15px;") Gracias por su interes, en breve momento recibira un correo electrónico.
 footer.footer
   .container
     p

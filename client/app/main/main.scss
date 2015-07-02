@@ -4,7 +4,13 @@
 
 #banner {
     border-bottom: none;
-    margin-top: -20px;
+    background-image: url(../assets/images/Registro_img.png);
+    height: 360px;
+    background-size: cover;
+    background-position: center;
+    @media (max-width: $screen-sm-min){
+        height: 150px;
+    }
 }
 
 #banner h1 {
