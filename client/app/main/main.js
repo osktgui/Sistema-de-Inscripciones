@@ -7,5 +7,9 @@ angular.module('inscripcionesApp')
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('email', {
+      	url: '/customemail',
+      	templateUrl: 'app/customemail/email.html'
       });
   });
