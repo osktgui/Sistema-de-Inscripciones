@@ -82,7 +82,7 @@ function send_email_mandrill(fullname, email, dni){
               "name": fullname,
               "type": "to"
           },{
-                  "email": "startupweekendhuancayo@gmail.com",
+                  "email": "contacto@xurface.com",
                   "name": "Startup Weekend Huancayo",
                   "type": "cc"
               }],
